@@ -259,6 +259,45 @@
       align-self: center;
     }
 
+    /* 手機版選單按鈕 */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 2em;
+      color: white;
+      cursor: pointer;
+      position: absolute;
+      top: 1em;
+      left: 1em;
+      z-index: 1001;
+    }
+
+    /* 手機版選單區塊 */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: var(--header-bg-light);
+      padding: 1em;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+    }
+
+    .mobile-menu.show {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5em 0;
+      font-weight: bold;
+    }
+
+
     @media (max-width: 1000px) {
       .top-news {
         grid-template-columns: repeat(2, 1fr);
@@ -266,57 +305,98 @@
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 800px) {
+  /* 類似 CNN、BBC 的手機版新聞網設計 */
   .top-news {
     display: flex;
     flex-direction: column;
     padding: 1em;
     gap: 1em;
   }
-  .top-news section {
-    width: 100%;
-  }
   .header-inner {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    padding: 0 1em;
   }
-  .nav-left,
-  .nav-right {
-    flex-direction: column;
-    gap: 0.5em;
-    align-items: center;
-  }
+
   .logo-area {
-    margin: 1em 0;
+    margin: 0.5em 0;
+    order: -1;
+    text-align: center;
   }
-  h2 {
-    font-size: 1em;
+
+  .menu-toggle {
+    align-self: flex-start;
   }
-  .ad-banner img,
-  .ad-banner div {
-    width: 90%;
+
+  .mobile-menu {
+    padding: 0.5em 1em;
+    font-size: 1.1em;
   }
-}
+
+  .mobile-menu a {
+    border-bottom: 1px solid #ccc;
+    padding: 0.75em 0;
+  }
+
+  .ad-banner img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  footer {
+    font-size: 0.9em;
+    padding: 1em 1em 2em;
+  }
+      .nav-left, .nav-right {
+        display: none;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .header-inner {
+        flex-direction: column;
+        align-items: center;
+      }
+      .logo-area {
+        margin: 1em 0;
+      }
+    }
     
   </style>
 </head>
 <body>
   <header>
     <div class="header-inner">
+      <!-- 手機選單按鈕 -->
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+      <!-- 左側導覽連結 -->
       <div class="nav-left">
         <a href="#">Home</a>
         <a href="#">Breaking</a>
         <a href="#">Local</a>
       </div>
+      <!-- 中央 Logo -->
       <div class="logo-area">
-        <img src="logo.png" alt="Aplus NEWS Logo">
+        <img src="https://www.ntust.edu.tw/var/file/0/1000/img/2340/logo_20191108.png" alt="NTUST Logo" />
       </div>
+      <!-- 右側導覽連結 -->
       <div class="nav-right">
         <a href="#">Tech</a>
         <a href="#">Society</a>
         <a href="#">Lifestyle</a>
       </div>
+      <!-- 手機版展開選單 -->
+      <nav class="mobile-menu">
+        <a href="#">Home</a>
+        <a href="#">Breaking</a>
+        <a href="#">Local</a>
+        <a href="#">Tech</a>
+        <a href="#">Society</a>
+        <a href="#">Lifestyle</a>
+      </nav>
     </div>
+    <!-- 深色模式切換按鈕 -->
     <button onclick="toggleDarkMode()" style="position: absolute; top: 1em; right: 1em; background: #444; color: white; border: none; padding: 0.5em 1em; border-radius: 4px; cursor: pointer;">Toggle Dark Mode</button>
   </header>
 
@@ -431,19 +511,25 @@
   </footer>
 
   <script>
+    // 切換深色模式
     function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
+      document.body.classList.toggle("dark-mode");
     }
 
-    let lastScrollY = 0;
-    const header = document.querySelector('header');
+    // 切換手機選單
+    function toggleMenu() {
+      document.querySelector(".mobile-menu").classList.toggle("show");
+    }
 
-    window.addEventListener('scroll', () => {
+    // 滾動導覽列變化（向下浮出）
+    let lastScrollY = 0;
+    const header = document.querySelector("header");
+    window.addEventListener("scroll", () => {
       const currentScroll = window.scrollY;
       if (currentScroll <= 0) {
-        header.classList.remove('scrolling');
+        header.classList.remove("scrolling");
       } else if (currentScroll > lastScrollY) {
-        header.classList.add('scrolling');
+        header.classList.add("scrolling");
       }
       lastScrollY = currentScroll;
     });
