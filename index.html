@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunburst Daily</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-light: #e9f3f9;
+      --bg-dark: #160c28;
+      --text-light: #1d4e89;
+      --text-dark: #f5f5f5;
+      --card-bg-light: #ffffff;
+      --card-bg-dark: #301934;
+      --title-bg-light: #f0f8ff;
+      --title-bg-dark: #472d61;
+      --header-bg-light: #22577a;
+      --header-bg-dark: #3d1e6d;
+    }
+
+    html, body {
+      margin: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg-light);
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body.dark-mode {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    body.dark-mode .top-news section,
+    body.dark-mode .title-box,
+    body.dark-mode .ad-banner,
+    body.dark-mode footer {
+      background-color: var(--card-bg-dark) !important;
+      color: var(--text-dark) !important;
+    }
+
+    body.dark-mode .title-box {
+      background: var(--title-bg-dark) !important;
+    }
+
+    body.dark-mode h2 {
+      color: var(--text-dark) !important;
+    }
+
+    body.dark-mode header {
+      background: var(--header-bg-dark);
+      color: var(--text-dark);
+    }
+
+    header {
+      width: 100vw;
+      background: var(--header-bg-light);
+      color: white;
+      padding: 1em 0 0.5em;
+      position: relative;
+      left: 0;
+      z-index: 1000;
+      box-sizing: border-box;
+      transition: all 0.4s ease;
+    }
+
+    header.scrolling {
+      position: fixed !important;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background: var(--header-bg-light);
+    }
+
+    .header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 1em;
+}
+
+    .nav-left, .nav-right {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+    .nav-left a, .nav-right a {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .nav-left a::after, .nav-right a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background: white;
+      transition: width 0.3s ease;
+    }
+
+    .nav-left a:hover::after, .nav-right a:hover::after {
+      width: 100%;
+    }
+
+    .logo-area {
+  flex-shrink: 0;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+    .logo-area img {
+  height: 60px;
+  max-width: 100%;
+}
+
+    .ad-banner {
+      width: 100%;
+      background-color: var(--title-bg-light);
+      text-align: center;
+      padding: 0.5em 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      font-size: 1.1em;
+      letter-spacing: 0.5px;
+    }
+
+    .ad-banner div {
+      max-width: 1200px;
+      margin: 0 auto;
+      font-weight: bold;
+      color: #22577a;
+      padding: 0.5em 1em;
+      border: 2px dashed #90c2e7;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .top-news {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas:
+        "lead lead big"
+        "s1 s2 s3";
+      gap: 2em;
+      padding: 2em;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    .top-news2{
+      grid-template-areas:
+        "big lead lead"
+        "s1 s2 s3";
+    }
+
+    .top-news section {
+      position: relative;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      overflow: hidden;
+      border: 1px solid #c6dce4;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .top-news section:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .lead-story { grid-area: lead; }
+    .big-story { grid-area: big; }
+    .s1 { grid-area: s1; }
+    .s2 { grid-area: s2; }
+    .s3 { grid-area: s3; }
+
+    .image-box {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .overlay-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 1em;
+      font-size: 0.9em;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    section:hover .overlay-text {
+      opacity: 1;
+    }
+
+    .title-box {
+      padding: 0.8em 1em;
+      background: var(--title-bg-light);
+    }
+
+    h2 {
+      color: var(--text-light);
+      font-size: 1.2em;
+      margin: 0;
+      font-weight: 700;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+    }
+
+    footer {
+      background: #22577a;
+      color: white;
+      text-align: center;
+      padding: 1em;
+    }
+
+    hr.section-divider {
+      border: none;
+      border-top: 2px solid #ccc;
+      margin: 2em 0;
+      width: 90%;
+      align-self: center;
+    }
+
+    @media (max-width: 1000px) {
+      .top-news {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas: unset;
+      }
+    }
+
+    @media (max-width: 600px) {
+  .top-news {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    gap: 1em;
+  }
+  .top-news section {
+    width: 100%;
+  }
+  .header-inner {
+    flex-direction: column;
+    align-items: center;
+  }
+  .nav-left,
+  .nav-right {
+    flex-direction: column;
+    gap: 0.5em;
+    align-items: center;
+  }
+  .logo-area {
+    margin: 1em 0;
+  }
+  h2 {
+    font-size: 1em;
+  }
+  .ad-banner img,
+  .ad-banner div {
+    width: 90%;
+  }
+}
+    
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="nav-left">
+        <a href="#">Home</a>
+        <a href="#">Breaking</a>
+        <a href="#">Local</a>
+      </div>
+      <div class="logo-area">
+        <img src="https://www.ntust.edu.tw/var/file/0/1000/img/2340/logo_20191108.png" alt="NTUST Logo">
+      </div>
+      <div class="nav-right">
+        <a href="#">Tech</a>
+        <a href="#">Society</a>
+        <a href="#">Lifestyle</a>
+      </div>
+    </div>
+    <button onclick="toggleDarkMode()" style="position: absolute; top: 1em; right: 1em; background: #444; color: white; border: none; padding: 0.5em 1em; border-radius: 4px; cursor: pointer;">Toggle Dark Mode</button>
+  </header>
+
+  <div class="ad-banner">
+    <div>Advertisement Space – Your Ad Could Be Here!</div>
+  </div>
+
+  <div class="top-news">
+    <section class="lead-story">
+      <div class="image-box" style="background-image: url('./drowning-1.jpg');">
+        <div class="overlay-text">
+          A local high school student is being hailed as a hero after saving a young child from drowning at a nearby riverbank.
+        </div>
+      </div>
+      <div class="title-box">
+        <h2>Teen Hero Saves Drowning Child</h2>
+      </div>
+    </section>
+    
+    <section class="big-story">
+      <div class="image-box" style="background-image: url('https://www.northampton.ac.uk/wp-content/uploads/2019/06/Radka-Blazickova-1.jpg');">
+        <div class="overlay-text">
+          A young designer has created a fashion line using 100% recycled plastic bottles, gaining praise from environmental groups.
+        </div>
+      </div>
+      <div class="title-box">
+        <h2>Plastic Bottles to Runway Fashion</h2>
+      </div>
+    </section>
+    
+    <section class="s1">
+      <div class="image-box" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Volunteerism_and_Community_Service_in_Ukraine_Photo_Contest%2C_Sept-Nov%2C_2013_%2810959027806%29.jpg/330px-Volunteerism_and_Community_Service_in_Ukraine_Photo_Contest%2C_Sept-Nov%2C_2013_%2810959027806%29.jpg');">
+        <div class="overlay-text">
+          A new law requires all citizens over 18 to complete one day of community service each year or lose university admission points.
+        </div>
+      </div>
+      <div class="title-box">
+        <h2>New Law Requires Annual Community Service</h2>
+      </div>
+    </section>
+    
+    <section class="s2">
+      <div class="image-box" style="background-image: url('https://eu-images.contentstack.com/v3/assets/blt58a1f8f560a1ab0e/blt7a052d60e47bf95c/6684004e9a34e074e0068a79/Photo_01_KrogerDroneDelivery.jpg?width=1000&auto=webp&quality=80&disable=upscale');">
+        <div class="overlay-text">
+          A supermarket chain has begun delivering groceries via drone in two urban areas, promising arrival in under 15 minutes.
+        </div>
+      </div>
+      <div class="title-box">
+        <h2>Supermarket Launches Drone Grocery Deliveries</h2>
+      </div>
+    </section>
+    
+    <section class="s3">
+      <div class="image-box" style="background-image: url('https://i2.wp.com/www.mystateline.com/wp-content/uploads/sites/17/2025/04/041825-Evansville-Hail_1.png?w=876');">
+        <div class="overlay-text">
+          An unexpected hailstorm hit the capital, injuring 12 and damaging over 300 vehicles, prompting climate concerns.
+        </div>
+      </div>
+      <div class="title-box">
+        <h2>Hailstorm Strikes Capital, Injures 12</h2>
+      </div>
+    </section>
+  </div>
+
+  <hr class="section-divider">
+
+  <div class="top-news top-news2">
+    <section class="lead-story">
+      <div class="image-box" style="background-image: url('https://www.lefashionpost.com/wp-content/uploads/2024/10/sustainable-fashion-revolution.jpeg');">
+        <div class="overlay-text">Another inspiring story leads today's coverage with local impact and emotion.</div>
+      </div>
+      <div class="title-box">
+        <h2>Dog Cloning Sparks Ethical Debate</h2>
+      </div>
+    </section>
+    <section class="big-story">
+      <div class="image-box" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYGCvWNO4Qx3o0X5VjVsKihORYTjpUqhR0zw&s');">
+        <div class="overlay-text">Sustainable fashion trends continue growing worldwide.</div>
+      </div>
+      <div class="title-box">
+        <h2>Middle School Bans Student Cellphones</h2>
+      </div>
+    </section>
+    <section class="s1">
+      <div class="image-box" style="background-image: url('https://www.anolytics.ai/upload/1714562261_AI-robotics-in-healthcare-1.png');">
+        <div class="overlay-text">AI robots now deliver medicine and documents in a major hospital, though staff worry about job security.</div>
+      </div>
+      <div class="title-box">
+        <h2>AI Robots Assist in Hospital Work</h2>
+      </div>
+    </section>
+    <section class="s2">
+      <div class="image-box" style="background-image: url('https://cdn.antaranews.com/cache/1200x800/2023/01/10/IMG-20230110-WA0082.jpg');">
+        <div class="overlay-text">A mysterious island appeared off the coast after seismic activity. Experts believe it may be from undersea volcanoes.</div>
+      </div>
+      <div class="title-box">
+        <h2>Mysterious Island Emerges After Quake</h2>
+      </div>
+    </section>
+    <section class="s3">
+      <div class="image-box" style="background-image: url('https://photo.travelking.com.tw/scenery/73DAD6F2-F5B0-4F87-8057-297E840E23DE_e.jpg');">
+        <div class="overlay-text">A $10 million painting was stolen from the city museum. Investigators suspect tampering with the security system.</div>
+      </div>
+      <div class="title-box">
+        <h2>$10 Million Painting Stolen from Museum</h2>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sunburst Daily. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    let lastScrollY = 0;
+    const header = document.querySelector('header');
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+      if (currentScroll <= 0) {
+        header.classList.remove('scrolling');
+      } else if (currentScroll > lastScrollY) {
+        header.classList.add('scrolling');
+      }
+      lastScrollY = currentScroll;
+    });
+  </script>
+</body>
+</html>
