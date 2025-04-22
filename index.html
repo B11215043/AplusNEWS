@@ -9,17 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-light: #e9f3f9;
-      --bg-dark: #160c28;
-      --text-light: #1d4e89;
-      --text-dark: #f5f5f5;
-      --card-bg-light: #ffffff;
-      --card-bg-dark: #301934;
-      --title-bg-light: #f0f8ff;
-      --title-bg-dark: #472d61;
-      --header-bg-light: #22577a;
-      --header-bg-dark: #3d1e6d;
-    }
+  --bg-light: #fffbe6;        /* 淡奶油黃，溫暖明亮 */
+  --bg-dark: #1a1a2e;         /* 深藍紫，強烈對比 */
+  --text-light: #1e3d59;      /* 深藍灰字體 */
+  --text-dark: #fdf6e3;       /* 金黃色字體（在深色下） */
+  --card-bg-light: #fdf6e3;   /* 明亮柔和卡片背景 */
+  --card-bg-dark: #16213e;    /* 深卡片底色 */
+  --title-bg-light:  #fffbe6;  /* 標題背景柔和黃 */
+  --title-bg-dark: #0f3460;   /* 深色標題背景 */
+  --header-bg-light: #fcd581; /* 導覽列奶黃底 */
+  --header-bg-dark: #1a1a40;  /* 深色導覽列底 */
+}
 
     html, body {
       margin: 0;
@@ -37,8 +37,14 @@
     body.dark-mode .top-news section,
     body.dark-mode .title-box,
     body.dark-mode .ad-banner,
-    body.dark-mode footer {
+    body.dark-mode footer{
       background-color: var(--card-bg-dark) !important;
+      color: var(--text-dark) !important;
+    }
+
+    body.dark-mode .nav-left a, 
+    body.dark-mode .nav-right a,
+    body.dark-mode footer p{
       color: var(--text-dark) !important;
     }
 
@@ -94,7 +100,7 @@
 }
 
     .nav-left a, .nav-right a {
-      color: white;
+      color: var(--text-light);
       font-weight: bold;
       text-decoration: none;
       position: relative;
@@ -245,8 +251,8 @@
     }
 
     footer {
-      background: #22577a;
-      color: white;
+      background:var(--header-bg-light);
+      color: var(--text-light);
       text-align: center;
       padding: 1em;
     }
@@ -320,7 +326,7 @@
   }
 
   .logo-area {
-    margin: 0.5em 0;
+    margin: 0.2em 0;
     order: -1;
     text-align: center;
   }
@@ -378,7 +384,7 @@
       </div>
       <!-- 中央 Logo -->
       <div class="logo-area">
-        <img src="https://www.ntust.edu.tw/var/file/0/1000/img/2340/logo_20191108.png" alt="NTUST Logo" />
+        <img src="logo.png" alt="NTUST Logo" />
       </div>
       <!-- 右側導覽連結 -->
       <div class="nav-right">
