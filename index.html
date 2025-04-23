@@ -61,6 +61,13 @@
       color: var(--text-dark);
     }
 
+    body.dark-mode .logo-area img.light {
+      display: none;
+    }
+    body.dark-mode .logo-area img.dark {
+      display: block;
+    }
+
     header {
       width: 100vw;
       background: var(--header-bg-light);
@@ -133,6 +140,12 @@
     .logo-area img {
   height: 60px;
   max-width: 100%;
+}
+  .logo-area img.light {
+  display: block;
+}
+  .logo-area img.dark { 
+  display: none;
 }
 
     .ad-banner {
@@ -243,10 +256,8 @@
       font-size: 1.2em;
       margin: 0;
       font-weight: 700;
+      height: 50px;
       text-align: center;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       display: block;
     }
 
@@ -261,7 +272,7 @@
       border: none;
       border-top: 2px solid #ccc;
       margin: 2em 0;
-      width: 90%;
+      width: 100%;
       align-self: center;
     }
 
@@ -304,14 +315,8 @@
     }
 
 
-    @media (max-width: 1000px) {
-      .top-news {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-areas: unset;
-      }
-    }
 
-    @media (max-width: 800px) {
+    @media (max-width: 1000px) {
   /* 類似 CNN、BBC 的手機版新聞網設計 */
   .top-news {
     display: flex;
@@ -384,7 +389,8 @@
       </div>
       <!-- 中央 Logo -->
       <div class="logo-area">
-        <img src="logo.png" alt="NTUST Logo" />
+        <img class="light" src="logo.png" alt="NTUST Logo" />
+        <img class="dark" src="logo2.png" alt="NTUST Logo" />
       </div>
       <!-- 右側導覽連結 -->
       <div class="nav-right">
@@ -403,19 +409,18 @@
       </nav>
     </div>
     <!-- 深色模式切換按鈕 -->
-    <button onclick="toggleDarkMode()" style="position: absolute; top: 1em; right: 1em; background: #444; color: white; border: none; padding: 0.5em 1em; border-radius: 4px; cursor: pointer;">Toggle Dark Mode</button>
+    <button onclick="toggleDarkMode()" style="position: absolute; top: 1em; right: 1em; background: #444; color: white; border: none; padding: 0.5em 1em; border-radius: 4px; cursor: pointer;">☀️🌙</button>
   </header>
 
   <div class="ad-banner">
-    <div>Advertisement Space – Your Ad Could Be Here!</div>
+    <div><a href="https://youtu.be/dQw4w9WgXcQ?si=lVG8WZZMMM6OWZel"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCrkqqf5hVdLi0jhGF0iY7ujmcdt2W6fKRSA&s" alt=""></a></div>
   </div>
 
   <div class="top-news">
     <section class="lead-story">
       <div class="image-box" style="background-image: url('./drowning-1.jpg');">
         <div class="overlay-text">
-          A local high school student is being hailed as a hero after saving a young child from drowning at a nearby riverbank.
-        </div>
+          A high school student rescued a young child from drowning at a riverbank and received a bravery medal from the mayor.</div>
       </div>
       <div class="title-box">
         <h2>Teen Hero Saves Drowning Child</h2>
@@ -423,20 +428,19 @@
     </section>
     
     <section class="big-story">
-      <div class="image-box" style="background-image: url('https://www.northampton.ac.uk/wp-content/uploads/2019/06/Radka-Blazickova-1.jpg');">
+      <div class="image-box" style="background-image: url('https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iE6gXWv2kPUU/v0/-1x-1.webp');">
         <div class="overlay-text">
-          A young designer has created a fashion line using 100% recycled plastic bottles, gaining praise from environmental groups.
-        </div>
+          Panic buying erupted in several cities after a false online report claimed a national salt shortage.</div>
       </div>
       <div class="title-box">
-        <h2>Plastic Bottles to Runway Fashion</h2>
+        <h2>Salt Panic Fueled by Fake News</h2>
       </div>
     </section>
     
     <section class="s1">
       <div class="image-box" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Volunteerism_and_Community_Service_in_Ukraine_Photo_Contest%2C_Sept-Nov%2C_2013_%2810959027806%29.jpg/330px-Volunteerism_and_Community_Service_in_Ukraine_Photo_Contest%2C_Sept-Nov%2C_2013_%2810959027806%29.jpg');">
         <div class="overlay-text">
-          A new law requires all citizens over 18 to complete one day of community service each year or lose university admission points.
+          Citizens over 18 must now complete one day of community service each year under a new government law.
         </div>
       </div>
       <div class="title-box">
@@ -447,7 +451,7 @@
     <section class="s2">
       <div class="image-box" style="background-image: url('https://eu-images.contentstack.com/v3/assets/blt58a1f8f560a1ab0e/blt7a052d60e47bf95c/6684004e9a34e074e0068a79/Photo_01_KrogerDroneDelivery.jpg?width=1000&auto=webp&quality=80&disable=upscale');">
         <div class="overlay-text">
-          A supermarket chain has begun delivering groceries via drone in two urban areas, promising arrival in under 15 minutes.
+          A supermarket chain has started drone grocery deliveries in two cities, offering service in under 15 minutes.
         </div>
       </div>
       <div class="title-box">
@@ -458,7 +462,7 @@
     <section class="s3">
       <div class="image-box" style="background-image: url('https://i2.wp.com/www.mystateline.com/wp-content/uploads/sites/17/2025/04/041825-Evansville-Hail_1.png?w=876');">
         <div class="overlay-text">
-          An unexpected hailstorm hit the capital, injuring 12 and damaging over 300 vehicles, prompting climate concerns.
+          A sudden hailstorm hit the capital yesterday, injuring 12 people and damaging over 300 vehicles.
         </div>
       </div>
       <div class="title-box">
@@ -468,11 +472,12 @@
   </div>
 
   <hr class="section-divider">
+  <h2 style="font-size: 2em;margin-bottom: 5px;">more news</h2>
 
   <div class="top-news top-news2">
     <section class="lead-story">
-      <div class="image-box" style="background-image: url('https://www.lefashionpost.com/wp-content/uploads/2024/10/sustainable-fashion-revolution.jpeg');">
-        <div class="overlay-text">Another inspiring story leads today's coverage with local impact and emotion.</div>
+      <div class="image-box" style="background-image: url('https://miro.medium.com/v2/resize:fit:2000/1*FUE2Y0Zq30iatR6a7hEbxg.png');">
+        <div class="overlay-text">A woman who cloned her golden retriever for $50,000 has sparked debate over the ethics of pet cloning.</div>
       </div>
       <div class="title-box">
         <h2>Dog Cloning Sparks Ethical Debate</h2>
@@ -480,7 +485,7 @@
     </section>
     <section class="big-story">
       <div class="image-box" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYGCvWNO4Qx3o0X5VjVsKihORYTjpUqhR0zw&s');">
-        <div class="overlay-text">Sustainable fashion trends continue growing worldwide.</div>
+        <div class="overlay-text">A middle school has banned cellphone use during school hours, drawing mixed reactions from parents and students.</div>
       </div>
       <div class="title-box">
         <h2>Middle School Bans Student Cellphones</h2>
@@ -488,7 +493,7 @@
     </section>
     <section class="s1">
       <div class="image-box" style="background-image: url('https://www.anolytics.ai/upload/1714562261_AI-robotics-in-healthcare-1.png');">
-        <div class="overlay-text">AI robots now deliver medicine and documents in a major hospital, though staff worry about job security.</div>
+        <div class="overlay-text">A hospital has deployed AI robots to deliver medicine and documents, raising staff concerns about job security.</div>
       </div>
       <div class="title-box">
         <h2>AI Robots Assist in Hospital Work</h2>
@@ -496,7 +501,7 @@
     </section>
     <section class="s2">
       <div class="image-box" style="background-image: url('https://cdn.antaranews.com/cache/1200x800/2023/01/10/IMG-20230110-WA0082.jpg');">
-        <div class="overlay-text">A mysterious island appeared off the coast after seismic activity. Experts believe it may be from undersea volcanoes.</div>
+        <div class="overlay-text">A new island appeared off the coast following recent earthquakes, prompting investigation by geologists.</div>
       </div>
       <div class="title-box">
         <h2>Mysterious Island Emerges After Quake</h2>
@@ -504,7 +509,7 @@
     </section>
     <section class="s3">
       <div class="image-box" style="background-image: url('https://photo.travelking.com.tw/scenery/73DAD6F2-F5B0-4F87-8057-297E840E23DE_e.jpg');">
-        <div class="overlay-text">A $10 million painting was stolen from the city museum. Investigators suspect tampering with the security system.</div>
+        <div class="overlay-text">A $10 million painting was stolen from the city’s art museum, and police suspect the security system was breached.</div>
       </div>
       <div class="title-box">
         <h2>$10 Million Painting Stolen from Museum</h2>
@@ -513,7 +518,7 @@
   </div>
 
   <footer>
-    <p>&copy; 2025 Sunburst Daily. All rights reserved.</p>
+    <p>&copy; 2025 Aplus NEWS. All rights reserved.</p>
   </footer>
 
   <script>
